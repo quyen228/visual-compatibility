@@ -3,3 +3,4 @@ tensorflow-gpu==1.10.0
 torch
 torchvision
 scikit-image==0.14.2
+sentence-transformers==2.2.2
