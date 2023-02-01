@@ -58,15 +58,18 @@ for outfit in json_data:
 
     for id in outfit_ids:
         if id not in relations:
-            relations[id] = set()
-            img_feats = feat_dict[str(id)] 
-            # TODO, REMOVE
-            #cat_vector = cat_vectors[cat_dict[id]]
-            #feats = np.concatenate((cat_vector, img_feats))
-            features.append(img_feats)
-            # map this id to a sequential index
-            id2idx[id] = idx
-            idx += 1
+            try:
+                relations[id] = set()
+                img_feats = feat_dict[str(id)] 
+                # TODO, REMOVE
+                #cat_vector = cat_vectors[cat_dict[id]]
+                #feats = np.concatenate((cat_vector, img_feats))
+                features.append(img_feats)
+                # map this id to a sequential index
+                id2idx[id] = idx
+                idx += 1
+            except:
+                print(id)
 
         relations[id].update(outfit_ids)
         relations[id].remove(id)
