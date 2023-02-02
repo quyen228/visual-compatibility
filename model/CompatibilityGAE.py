@@ -105,7 +105,7 @@ class CompatibilityGAE(Model):
         self.batch_norm = batch_norm
         self.init = init
 
-        self.optimizer = tf.train.AdamOptimizer(learning_rate=self.learning_rate, momentum=0.9)
+        self.optimizer = tf.train.AdamOptimizer(learning_rate=self.learning_rate)
 
         self.build()
 
