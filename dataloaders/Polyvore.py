@@ -254,7 +254,7 @@ class DataLoaderPolyvore(Dataloader):
 
             question_adj = question_adj.tocsr()
 
-            yield question_adj, np.array(outfit_ids), np.array(choices_ids), np.array(gt)
+            yield question_adj, np.array(outfit_ids), np.array(answers_ids), np.array(gt)
 
     def get_test_compatibility(self):
         """
