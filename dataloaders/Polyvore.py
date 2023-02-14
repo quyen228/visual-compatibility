@@ -193,11 +193,10 @@ class DataLoaderPolyvore(Dataloader):
                 outfit_subset = question[0]
             for index in outfit_subset: # indexes of outfit nodes
 #                 i = 0                
-                for index_answer in full_choices: # indexes of possible choices answers
-                    print(index_answer, index)
+                for index_answer in full_choices: # indexes of possible choices answers                                        
+                    outfit_ids.append(index)
                     if index_answer == index:
                         break
-                    outfit_ids.append(index)
                     choices_ids.append(index_answer)
                     gt_idx = question[1][0]
                     gt.append(int(index_answer==gt_idx))# the correct connection is the first
