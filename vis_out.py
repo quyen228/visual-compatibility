@@ -126,7 +126,7 @@ def test_fitb(args):
         kwargs = {'K': args.k, 'subset': args.subset,
                 'resampled': args.resampled, 'expand_outfit':args.expand_outfit}
 
-        for idx, (question_adj, out_ids, choices_ids, labels) in tqdm(enumerate(dl.yield_test_questions_K_edges(**kwargs))):
+        for idx, (question_adj, out_ids, choices_ids, labels, questions) in tqdm(enumerate(dl.yield_test_questions_K_edges(**kwargs))):
             shape_choices = choices_ids.shape[0]
             q_support = get_degree_supports(question_adj, config['degree'], adj_self_con=ADJ_SELF_CONNECTIONS, verbose=False)
             for i in range(1, len(q_support)):
@@ -155,8 +155,8 @@ def test_fitb(args):
             if not os.path.exists(f"./{args.result}/{idx}/choices"):
                 os.mkdir(f"./{args.result}/{idx}/choices")
 
-            for v in np.unique(out_ids):
-                id = get_image_id(v)
+            for q in questions:
+                id = get_image_id(q)
                 if id == get_image_id(choices_ids[predicted]) or id == get_image_id(choices_ids[gt]):
                     print(id)
                 im = save_image(id)           
