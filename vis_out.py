@@ -127,6 +127,7 @@ def test_fitb(args):
                 'resampled': args.resampled, 'expand_outfit':args.expand_outfit}
 
         for idx, (question_adj, out_ids, choices_ids, labels) in tqdm(enumerate(dl.yield_test_questions_K_edges(**kwargs))):
+            shape_choices = choices_ids.shape[0]
             q_support = get_degree_supports(question_adj, config['degree'], adj_self_con=ADJ_SELF_CONNECTIONS, verbose=False)
             for i in range(1, len(q_support)):
                 q_support[i] = norm_adj(q_support[i])
@@ -138,10 +139,10 @@ def test_fitb(args):
             # compute the output (correct or not) for the current FITB question
             preds = sess.run(model.outputs, feed_dict=q_feed_dict)
             preds = sigmoid(preds)
-            outs = preds.reshape((-1, 35960))
+            outs = preds.reshape((-1, shape_choices))
             outs = outs.mean(axis=0) # pick the item with average largest probability, averaged accross all edges
 
-            gt = labels.reshape((-1, 35960)).mean(axis=0)
+            gt = labels.reshape((-1, shape_choices)).mean(axis=0)
             predicted = outs.argmax()
             gt = gt.argmax()
             
