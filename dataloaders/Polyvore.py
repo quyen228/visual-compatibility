@@ -195,8 +195,6 @@ class DataLoaderPolyvore(Dataloader):
 #                 i = 0                
                 for index_answer in full_choices: # indexes of possible choices answers                                        
                     outfit_ids.append(index)
-                    if index_answer == index:
-                        break
                     choices_ids.append(index_answer)
                     gt_idx = question[1][0]
                     gt.append(int(index_answer==gt_idx))# the correct connection is the first
