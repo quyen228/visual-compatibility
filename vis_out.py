@@ -127,6 +127,7 @@ def test_fitb(args):
                 'resampled': args.resampled, 'expand_outfit':args.expand_outfit}
 
         for idx, (question_adj, out_ids, choices_ids, labels) in tqdm(enumerate(dl.yield_test_questions_K_edges(**kwargs))):
+            print(choices_ids.shape)
             q_support = get_degree_supports(question_adj, config['degree'], adj_self_con=ADJ_SELF_CONNECTIONS, verbose=False)
             for i in range(1, len(q_support)):
                 q_support[i] = norm_adj(q_support[i])
@@ -162,7 +163,7 @@ def test_fitb(args):
             for v in  np.unique(choices_ids):
                 id = get_image_id(v)
                 im = save_image(id)
-                skimage.io.imsave(f"./{args.result}/{idx}/choices/{id}.png", im)
+#                 skimage.io.imsave(f"./{args.result}/{idx}/choices/{id}.png", im)
                 if id == get_image_id(choices_ids[gt]):
                     im = save_image(id)
                     skimage.io.imsave(f"./{args.result}/{idx}/gt_{id}.png", im)
