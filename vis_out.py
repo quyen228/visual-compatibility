@@ -169,6 +169,7 @@ def test_fitb(args):
                 if id == get_image_id(choices_ids[predicted]):
                     im = save_image(id)
                     skimage.io.imsave(f"./args.result/{idx}/pd_{id}.png", im)         
+            break                    
                     
 
 if __name__ == "__main__":
