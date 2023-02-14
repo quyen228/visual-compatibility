@@ -228,8 +228,9 @@ class DataLoaderPolyvore(Dataloader):
                             available_adj[u,v] = 1
                             available_adj[v,u] = 1
                 for u, v in zip(outfit_ids, choices_ids):
-                    available_adj[u, v] = 0
-                    available_adj[v, u] = 0
+                    if u != v:
+                        available_adj[u, v] = 0
+                        available_adj[v, u] = 0
                 available_adj = available_adj.tocsr()
                 available_adj.eliminate_zeros()
 
