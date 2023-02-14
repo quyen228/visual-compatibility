@@ -115,7 +115,8 @@ def test_fitb(args):
         if im.shape[2] == 4:
             im = rgba2rgb(im)
         im = resize(im, (256, 256))
-        skimage.io.imsave(f"{id}.png", im)
+#         skimage.io.imsave(f"{id}.png", im)
+        return im 
 
 
     with tf.Session() as sess:
@@ -142,16 +143,24 @@ def test_fitb(args):
             gt = labels.reshape((-1, 4)).mean(axis=0)
             predicted = outs.argmax()
             gt = gt.argmax()
+            
+            if not os.path.exists("./pd"):
+                os.mkdir("./pd")
+            if not os.path.exists("./gt"):
+                os.mkdir("./gt")
 
             for v in np.unique(out_ids):
                 id = get_image_id(v)
-                save_image(id)
+                im = save_image(id)           
+                skimage.io.imsave(f"./pd/{id}.png", im)
             
             for v in  np.unique(choices_ids):
                 id = get_image_id(v)
-                save_image(id)
+                im = save_image(id)
+                skimage.io.imsave(f"./gt/{id}.png", im)
             
             print(get_image_id(choices_ids[gt]))
+            print(get_image_id(out_ids[predicted]))
 
             break
 
