@@ -143,7 +143,7 @@ def test_fitb(args):
             outs = preds.reshape((-1, 17981))
             outs = outs.mean(axis=0) # pick the item with average largest probability, averaged accross all edges
 
-            gt = labels.reshape((-1, 4)).mean(axis=0)
+            gt = labels.reshape((-1, 17981)).mean(axis=0)
             predicted = outs.argmax()
             gt = gt.argmax()
             
