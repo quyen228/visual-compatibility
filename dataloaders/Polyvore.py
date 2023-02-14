@@ -194,8 +194,10 @@ class DataLoaderPolyvore(Dataloader):
             else:
                 outfit_subset = question[0]
             for index in outfit_subset: # indexes of outfit nodes
-#                 i = 0
+#                 i = 0                
                 for index_answer in full_choices: # indexes of possible choices answers
+                    if index_answer == index:
+                        break
                     outfit_ids.append(index)
                     choices_ids.append(index_answer)
                     gt_idx = question[1][0]
