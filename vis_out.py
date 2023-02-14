@@ -108,14 +108,15 @@ def test_fitb(args):
         outfit_id, index = id.split('_') # outfitID_index
         images_path = 'data/polyvore/images/'
         image_path = images_path + outfit_id + '/' + '{}.jpg'.format(index)
-        assert os.path.exists(image_path)
-        im = skimage.io.imread(image_path)
-        if len(im.shape) == 2:
-            im = gray2rgb(im)
-        if im.shape[2] == 4:
-            im = rgba2rgb(im)
-        im = resize(im, (256, 256))
-#         skimage.io.imsave(f"{id}.png", im)
+        if os.path.exists(image_path):
+            im = skimage.io.imread(image_path)
+            if len(im.shape) == 2:
+                im = gray2rgb(im)
+            if im.shape[2] == 4:
+                im = rgba2rgb(im)
+            im = resize(im, (256, 256))
+        else:
+            print(image_path)
         return im 
 
 
