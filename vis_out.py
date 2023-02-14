@@ -125,7 +125,7 @@ def test_fitb(args):
         kwargs = {'K': args.k, 'subset': args.subset,
                 'resampled': args.resampled, 'expand_outfit':args.expand_outfit}
 
-        for question_adj, out_ids, choices_ids, labels, valid in dl.yield_test_questions_K_edges(**kwargs):
+        for idx, question_adj, out_ids, choices_ids, labels, valid in enumerate(dl.yield_test_questions_K_edges(**kwargs)):
             q_support = get_degree_supports(question_adj, config['degree'], adj_self_con=ADJ_SELF_CONNECTIONS, verbose=False)
             for i in range(1, len(q_support)):
                 q_support[i] = norm_adj(q_support[i])
@@ -144,23 +144,33 @@ def test_fitb(args):
             predicted = outs.argmax()
             gt = gt.argmax()
             
-            if not os.path.exists("./pd"):
-                os.mkdir("./pd")
-            if not os.path.exists("./gt"):
-                os.mkdir("./gt")
+            if not os.path.exists("./result"):
+                os.mkdir("./result")
+            if not os.path.exists(f"./result/{idx}"):
+                os.mkdir(f"./result/{idx}")
+            if not os.path.exists(f"./result/{idx}/questions"):
+                os.mkdir(f"./result/{idx}/questions")
+            if not os.path.exists(f"./result/{idx}/choices"):
+                os.mkdir(f"./result/{idx}/choices")
 
             for v in np.unique(out_ids):
                 id = get_image_id(v)
                 im = save_image(id)           
-                skimage.io.imsave(f"./pd/{id}.png", im)
+                skimage.io.imsave(f"./result/{idx}/questions/{id}.png", im)
             
             for v in  np.unique(choices_ids):
                 id = get_image_id(v)
-                im = save_image(id)
-                skimage.io.imsave(f"./gt/{id}.png", im)
+                print(id)
+                if id == get_image_id(choices_ids[gt]):
+                    im = save_image(id)
+                    skimage.io.imsave(f"./result/{idx}/gt_{id}.png", im)
+                elif id == get_image_id(choices_ids[predicted]):
+                    im = save_image(id)
+                    skimage.io.imsave(f"./result/{idx}/pd_{id}.png", im)
+                                        
             
             print(get_image_id(choices_ids[gt]))
-            print(get_image_id(out_ids[predicted]))
+            print(get_image_id(choices_ids[predicted]))
 
             break
 
