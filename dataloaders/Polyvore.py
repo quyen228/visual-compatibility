@@ -186,7 +186,6 @@ class DataLoaderPolyvore(Dataloader):
             outfit_ids = []
             choices_ids = []
             gt = []
-            answers_ids = []
             # keep only a subset of the outfit
             if subset:
                 outfit_subset = np.random.choice(question[0], 3, replace=False)
@@ -195,8 +194,8 @@ class DataLoaderPolyvore(Dataloader):
             for index in outfit_subset: # indexes of outfit nodes
 #                 i = 0                
                 for index_answer in full_choices: # indexes of possible choices answers    
-                    if index != index_answer:
-                        answers_ids.append(index_answer)
+                    if index == index_answer:
+                        break
                     outfit_ids.append(index)
                     choices_ids.append(index_answer)
                     gt_idx = question[1][0]
@@ -228,7 +227,6 @@ class DataLoaderPolyvore(Dataloader):
                             available_adj[u,v] = 1
                             available_adj[v,u] = 1
                 for u, v in zip(outfit_ids, choices_ids):
-                    if u != v:
                         available_adj[u, v] = 0
                         available_adj[v, u] = 0
                 available_adj = available_adj.tocsr()
@@ -238,7 +236,7 @@ class DataLoaderPolyvore(Dataloader):
 
                 extra_edges = []
                 # now fill the adj matrix with the expanded edges for each node (only for the choices)
-                nodes_to_expand = answers_ids
+                nodes_to_expand = choices_ids
 
                 if expand_outfit: # expand the outfit items as well
                     nodes_to_expand.extend(outfit_subset)
@@ -254,7 +252,7 @@ class DataLoaderPolyvore(Dataloader):
 
             question_adj = question_adj.tocsr()
 
-            yield question_adj, np.array(outfit_ids), np.array(answers_ids), np.array(gt)
+            yield question_adj, np.array(outfit_ids), np.array(choices_ids), np.array(gt), questions
 
     def get_test_compatibility(self):
         """
