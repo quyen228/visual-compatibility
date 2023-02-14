@@ -105,7 +105,7 @@ def test_fitb(args):
     
     def save_image(id):
         outfit_id, index = id.split('_') # outfitID_index
-        images_path = 'polyvore_images/images/'
+        images_path = 'data/polyvore_images/images/'
         image_path = images_path + outfit_id + '/' + '{}.jpg'.format(index)
         assert os.path.exists(image_path)
         im = skimage.io.imread(image_path)
