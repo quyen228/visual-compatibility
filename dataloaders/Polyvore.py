@@ -234,7 +234,7 @@ class DataLoaderPolyvore(Dataloader):
 
                 extra_edges = []
                 # now fill the adj matrix with the expanded edges for each node (only for the choices)
-                nodes_to_expand = choices_ids[:4]
+                nodes_to_expand = choices_ids
 
                 if expand_outfit: # expand the outfit items as well
                     nodes_to_expand.extend(outfit_subset)
