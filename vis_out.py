@@ -13,6 +13,7 @@ from skimage.color import gray2rgb, rgba2rgb
 import skimage.io
 from collections import namedtuple
 import os
+from tqdm import tqdm
 
 from utils import get_degree_supports, sparse_to_tuple, normalize_nonsym_adj
 from utils import construct_feed_dict
@@ -125,7 +126,7 @@ def test_fitb(args):
         kwargs = {'K': args.k, 'subset': args.subset,
                 'resampled': args.resampled, 'expand_outfit':args.expand_outfit}
 
-        for idx, (question_adj, out_ids, choices_ids, labels, valid) in enumerate(dl.yield_test_questions_K_edges(**kwargs)):
+        for idx, (question_adj, out_ids, choices_ids, labels, valid) in tqdm(enumerate(dl.yield_test_questions_K_edges(**kwargs))):
             q_support = get_degree_supports(question_adj, config['degree'], adj_self_con=ADJ_SELF_CONNECTIONS, verbose=False)
             for i in range(1, len(q_support)):
                 q_support[i] = norm_adj(q_support[i])
@@ -160,7 +161,6 @@ def test_fitb(args):
             
             for v in  np.unique(choices_ids):
                 id = get_image_id(v)
-                print(id)
                 im = save_image(id)
                 skimage.io.imsave(f"./result/{idx}/choices/{id}.png", im)
                 if id == get_image_id(choices_ids[gt]):
@@ -168,13 +168,8 @@ def test_fitb(args):
                     skimage.io.imsave(f"./result/{idx}/gt_{id}.png", im)
                 if id == get_image_id(choices_ids[predicted]):
                     im = save_image(id)
-                    skimage.io.imsave(f"./result/{idx}/pd_{id}.png", im)
-                                        
-            print("\n")
-            print(get_image_id(choices_ids[gt]))
-            print(get_image_id(choices_ids[predicted]))
-
-            break
+                    skimage.io.imsave(f"./result/{idx}/pd_{id}.png", im)         
+                    
 
 if __name__ == "__main__":
     # TODO: remove unnecessary arguments
