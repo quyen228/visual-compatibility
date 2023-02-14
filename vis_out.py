@@ -140,7 +140,7 @@ def test_fitb(args):
             preds = sess.run(model.outputs, feed_dict=q_feed_dict)
             preds = sigmoid(preds)
             print(preds.shape)
-            outs = preds.reshape((-1, 4))
+            outs = preds.reshape((-1, 17981))
             outs = outs.mean(axis=0) # pick the item with average largest probability, averaged accross all edges
 
             gt = labels.reshape((-1, 4)).mean(axis=0)
