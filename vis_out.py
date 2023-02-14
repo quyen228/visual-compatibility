@@ -105,7 +105,7 @@ def test_fitb(args):
     
     def save_image(id):
         outfit_id, index = id.split('_') # outfitID_index
-        images_path = 'data/polyvore_images/images/'
+        images_path = 'data/polyvore/images/'
         image_path = images_path + outfit_id + '/' + '{}.jpg'.format(index)
         print(image_path)
         assert os.path.exists(image_path)
