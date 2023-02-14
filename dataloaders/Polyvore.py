@@ -181,8 +181,6 @@ class DataLoaderPolyvore(Dataloader):
         for question in questions:
             full_choices += question[1]
         full_choices = list(set(full_choices))
-        print(len(full_choices))
-        print(full_choices)
         n_nodes = self.test_adj.shape[0]
         for question in questions:
             outfit_ids = []
