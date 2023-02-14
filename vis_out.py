@@ -156,7 +156,7 @@ def test_fitb(args):
 
             for v in np.unique(out_ids):
                 id = get_image_id(v)
-                if id == get_image_id(choices_ids[predicted]):
+                if id == get_image_id(choices_ids[predicted]) or id == get_image_id(choices_ids[gt]):
                     print(id)
                 im = save_image(id)           
                 skimage.io.imsave(f"./{args.result}/{idx}/questions/{id}.png", im)
