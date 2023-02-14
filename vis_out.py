@@ -145,30 +145,30 @@ def test_fitb(args):
             predicted = outs.argmax()
             gt = gt.argmax()
             
-            if not os.path.exists("./result"):
-                os.mkdir("./result")
-            if not os.path.exists(f"./result/{idx}"):
-                os.mkdir(f"./result/{idx}")
-            if not os.path.exists(f"./result/{idx}/questions"):
-                os.mkdir(f"./result/{idx}/questions")
-            if not os.path.exists(f"./result/{idx}/choices"):
-                os.mkdir(f"./result/{idx}/choices")
+            if not os.path.exists("./args.result"):
+                os.mkdir("./args.result")
+            if not os.path.exists(f"./args.result/{idx}"):
+                os.mkdir(f"./args.result/{idx}")
+            if not os.path.exists(f"./args.result/{idx}/questions"):
+                os.mkdir(f"./args.result/{idx}/questions")
+            if not os.path.exists(f"./args.result/{idx}/choices"):
+                os.mkdir(f"./args.result/{idx}/choices")
 
             for v in np.unique(out_ids):
                 id = get_image_id(v)
                 im = save_image(id)           
-                skimage.io.imsave(f"./result/{idx}/questions/{id}.png", im)
+                skimage.io.imsave(f"./args.result/{idx}/questions/{id}.png", im)
             
             for v in  np.unique(choices_ids):
                 id = get_image_id(v)
                 im = save_image(id)
-                skimage.io.imsave(f"./result/{idx}/choices/{id}.png", im)
+                skimage.io.imsave(f"./args.result/{idx}/choices/{id}.png", im)
                 if id == get_image_id(choices_ids[gt]):
                     im = save_image(id)
-                    skimage.io.imsave(f"./result/{idx}/gt_{id}.png", im)
+                    skimage.io.imsave(f"./args.result/{idx}/gt_{id}.png", im)
                 if id == get_image_id(choices_ids[predicted]):
                     im = save_image(id)
-                    skimage.io.imsave(f"./result/{idx}/pd_{id}.png", im)         
+                    skimage.io.imsave(f"./args.result/{idx}/pd_{id}.png", im)         
                     
 
 if __name__ == "__main__":
@@ -183,5 +183,6 @@ if __name__ == "__main__":
     parser.add_argument('-subset', '--subset', dest='subset', action='store_true',
                         help='Use only a subset of the nodes that form the outfit (3 of them) and use the others as connections')
     parser.add_argument("-lf", "--load_from", type=str, required=True, default=None, help="Model used.")
+    parser.add_argument("--result", type=str, required=True, default="./result", help="path result to save")
     args = parser.parse_args()
     test_fitb(vars(args))
