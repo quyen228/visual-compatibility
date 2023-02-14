@@ -126,7 +126,7 @@ def test_fitb(args):
         kwargs = {'K': args.k, 'subset': args.subset,
                 'resampled': args.resampled, 'expand_outfit':args.expand_outfit}
 
-        for idx, (question_adj, out_ids, choices_ids, labels, valid) in tqdm(enumerate(dl.yield_test_questions_K_edges(**kwargs))):
+        for idx, (question_adj, out_ids, choices_ids, labels) in tqdm(enumerate(dl.yield_test_questions_K_edges(**kwargs))):
             q_support = get_degree_supports(question_adj, config['degree'], adj_self_con=ADJ_SELF_CONNECTIONS, verbose=False)
             for i in range(1, len(q_support)):
                 q_support[i] = norm_adj(q_support[i])
