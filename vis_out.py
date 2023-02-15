@@ -128,6 +128,8 @@ def test_fitb(args):
 
         for idx, (question_adj, out_ids, choices_ids, labels, questions) in tqdm(enumerate(dl.yield_test_questions_K_edges(**kwargs))):
             shape_choices = choices_ids.shape[0]
+            if shape_choices == 0:
+                continue
             q_support = get_degree_supports(question_adj, config['degree'], adj_self_con=ADJ_SELF_CONNECTIONS, verbose=False)
             for i in range(1, len(q_support)):
                 q_support[i] = norm_adj(q_support[i])
