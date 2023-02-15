@@ -199,7 +199,7 @@ class DataLoaderPolyvore(Dataloader):
                     continue
                 for index_answer in full_choices: # indexes of possible choices answers    
                     if index_answer in outfit_subset \
-                        or idx2clus[str(index_answer)] == "null"\ 
+                        or idx2clus[str(index_answer)] == "null" \ 
                             or idx2clus[str(index_answer)] == idx2clus[str(index)]:
                         continue
                     outfit_ids.append(index)
