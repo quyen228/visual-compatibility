@@ -40,7 +40,6 @@ else:
 
 relations = {}
 id2idx = {}
-# cat_dict = {}
 idx = 0
 features = []
 
@@ -54,7 +53,7 @@ for outfit in json_data:
         _, id = item['image'].split('id=')
         id = int(id)
         outfit_ids.add(id)
-#         cat_dict[id] = item['categoryid']
+        #cat_dict[id] = item['categoryid']
         map_id2their[id] = '{}_{}'.format(outfit['set_id'], item['index'])
 
     for id in outfit_ids:
@@ -63,8 +62,8 @@ for outfit in json_data:
                 relations[id] = set()
                 img_feats = feat_dict[str(id)] 
                 # TODO, REMOVE
-#                 cat_vector = cat_vectors[cat_dict[id]]
-#                 feats = np.concatenate((cat_vector, img_feats))
+                #cat_vector = cat_vectors[cat_dict[id]]
+                #feats = np.concatenate((cat_vector, img_feats))
                 features.append(img_feats)
                 # map this id to a sequential index
                 id2idx[id] = idx
