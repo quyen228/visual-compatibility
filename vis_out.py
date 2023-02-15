@@ -146,21 +146,21 @@ def test_fitb(args):
             predicted = outs.argmax()
             gt = gt.argmax()
             
-            if not os.path.exists(f"./{args.result}"):
-                os.mkdir(f"./{args.result}")
-            if not os.path.exists(f"./{args.result}/{idx}"):
-                os.mkdir(f"./{args.result}/{idx}")
-            if not os.path.exists(f"./{args.result}/{idx}/questions"):
-                os.mkdir(f"./{args.result}/{idx}/questions")
-            if not os.path.exists(f"./{args.result}/{idx}/choices"):
-                os.mkdir(f"./{args.result}/{idx}/choices")
+            if not os.path.exists(f"{args.result}"):
+                os.mkdir(f"{args.result}")
+            if not os.path.exists(f"{args.result}/{idx}"):
+                os.mkdir(f"{args.result}/{idx}")
+            if not os.path.exists(f"{args.result}/{idx}/questions"):
+                os.mkdir(f"{args.result}/{idx}/questions")
+            if not os.path.exists(f"{args.result}/{idx}/choices"):
+                os.mkdir(f"{args.result}/{idx}/choices")
 
             for q in questions:
                 id = get_image_id(q)
                 if id == get_image_id(choices_ids[predicted]) or id == get_image_id(choices_ids[gt]):
                     print(id)
                 im = save_image(id)           
-                skimage.io.imsave(f"./{args.result}/{idx}/questions/{id}.png", im)
+                skimage.io.imsave(f"{args.result}/{idx}/questions/{id}.png", im)
             
             for v in  np.unique(choices_ids):
                 id = get_image_id(v)
@@ -168,10 +168,10 @@ def test_fitb(args):
 #                 skimage.io.imsave(f"./{args.result}/{idx}/choices/{id}.png", im)
                 if id == get_image_id(choices_ids[gt]):
                     im = save_image(id)
-                    skimage.io.imsave(f"./{args.result}/{idx}/gt_{id}.png", im)
+                    skimage.io.imsave(f"{args.result}/{idx}/gt_{id}.png", im)
                 if id == get_image_id(choices_ids[predicted]):
                     im = save_image(id)
-                    skimage.io.imsave(f"./{args.result}/{idx}/pd_{id}.png", im)         
+                    skimage.io.imsave(f"{args.result}/{idx}/pd_{id}.png", im)         
                     
 
 if __name__ == "__main__":
