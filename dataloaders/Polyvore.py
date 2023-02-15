@@ -173,7 +173,7 @@ class DataLoaderPolyvore(Dataloader):
         """
         assert K >= 0
         from utils import Graph
-        cat_clus_path = f"path_dataset/../jsons/cat/idx2clus.json"
+        cat_clus_path = f"{path_dataset}/../jsons/cat/idx2clus.json"
         with open(cat_clus_path) as f:
             idx2clus = json.load(f)
         # each question consists on N*4 edges to predict
