@@ -173,9 +173,7 @@ class DataLoaderPolyvore(Dataloader):
         """
         assert K >= 0
         from utils import Graph
-        cat_clus_path = f"path_dataset/../jsons/cat/idx2clus.json"
-        with open(cat_clus_path) as f:
-            idx2clus = json.load(f)
+
         # each question consists on N*4 edges to predict
         # self.questions is a list of questions with N elements and 4 possible choices (answers)
         questions = self.questions if not resampled else self.questions_resampled
@@ -195,12 +193,8 @@ class DataLoaderPolyvore(Dataloader):
                 outfit_subset = question[0]
             for index in outfit_subset: # indexes of outfit nodes
 #                 i = 0                
-                if idx2clus[str(index)] == "null":
-                    continue
                 for index_answer in full_choices: # indexes of possible choices answers    
-                    if index_answer in outfit_subset \
-                        or idx2clus[str(index_answer)] == "null"\ 
-                            or idx2clus[str(index_answer)] == idx2clus[str(index)]:
+                    if index_answer in outfit_subset:
                         continue
                     outfit_ids.append(index)
                     choices_ids.append(index_answer)
