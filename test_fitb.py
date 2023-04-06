@@ -107,7 +107,7 @@ def test_fitb(args):
 
         num_processed = 0
         correct = 0
-
+        score = []
         kwargs = {'K': args.k, 'subset': args.subset,
                 'resampled': args.resampled, 'expand_outfit':args.expand_outfit}
 
@@ -131,9 +131,9 @@ def test_fitb(args):
             gt = gt.argmax()
             num_processed += 1
             correct += int(predicted == gt)
-
-            print("[{}] Acc: {}".format(num_processed, correct/num_processed))
-
+            score.append(correct/num_processed)
+#             print("[{}] Acc: {}".format(num_processed, correct/num_processed))
+    print(f'Acc: {sum(score)/len(score)}')
     print('Best val score saved in log: {}'.format(config['best_val_score']))
     print('Last val score saved in log: {}'.format(log['val']['acc'][-1]))
 
