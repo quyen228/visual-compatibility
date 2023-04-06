@@ -177,30 +177,26 @@ class DataLoaderPolyvore(Dataloader):
         # each question consists on N*4 edges to predict
         # self.questions is a list of questions with N elements and 4 possible choices (answers)
         questions = self.questions if not resampled else self.questions_resampled
-        for question in questions:
-            full_choices = list(set([choice for choice in question[1]]))
-        print(len(full_choices))
-        print(full_choices)
         n_nodes = self.test_adj.shape[0]
         for question in questions:
             outfit_ids = []
             choices_ids = []
             gt = []
+            valid = []
             # keep only a subset of the outfit
             if subset:
                 outfit_subset = np.random.choice(question[0], 3, replace=False)
             else:
                 outfit_subset = question[0]
             for index in outfit_subset: # indexes of outfit nodes
-#                 i = 0
-                for index_answer in full_choices: # indexes of possible choices answers
+                i = 0
+                for index_answer in question[1]: # indexes of possible choices answers
                     outfit_ids.append(index)
                     choices_ids.append(index_answer)
-                    gt_idx = question[1][0]
-                    gt.append(int(index_answer==gt_idx))# the correct connection is the first
+                    gt.append(int(i==0))# the correct connection is the first
                     # a link is valid if the candidate item is from the same category as the missing item
-#                     valid.append(int(question[2][i] == question[3]))
-#                     i += 1
+                    valid.append(int(question[2][i] == question[3]))
+                    i += 1
 
             # question adj with only the outfit edges
             question_adj = sp.csr_matrix((n_nodes, n_nodes))
@@ -250,7 +246,7 @@ class DataLoaderPolyvore(Dataloader):
 
             question_adj = question_adj.tocsr()
 
-            yield question_adj, np.array(outfit_ids), np.array(choices_ids), np.array(gt)
+            yield question_adj, np.array(outfit_ids), np.array(choices_ids), np.array(gt), np.array(valid)
 
     def get_test_compatibility(self):
         """
