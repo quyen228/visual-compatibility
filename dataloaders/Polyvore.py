@@ -178,7 +178,7 @@ class DataLoaderPolyvore(Dataloader):
         # self.questions is a list of questions with N elements and 4 possible choices (answers)
         questions = self.questions if not resampled else self.questions_resampled
         for question in questions:
-            full_choices = list(set([choice for choice in question[1]))
+            full_choices = list(set([choice for choice in question[1]]))
         print(len(full_choices))
         print(full_choices)
         n_nodes = self.test_adj.shape[0]
